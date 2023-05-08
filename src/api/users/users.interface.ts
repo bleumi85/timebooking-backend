@@ -5,6 +5,10 @@ export interface Users {
   userName: string;
 }
 
+export interface IUserRO {
+  id: string;
+}
+
 export enum Role {
   ADMIN = 'Admin',
   USER = 'User',
