@@ -36,6 +36,6 @@ export default defineConfig({
   metadataProvider: TsMorphMetadataProvider,
   extensions: [EntityGenerator, Migrator, SeedManager],
   cache: {
-    enabled: false
-  }
+    enabled: false,
+  },
 });

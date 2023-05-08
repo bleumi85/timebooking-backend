@@ -23,9 +23,12 @@ async function bootstrap() {
     if (CURRENT_NODE_ENV === NODE_ENV.DEVELOPMENT) {
       Logger.log(`http://localhost:${PORT}`, `Web-${CURRENT_NODE_ENV}`);
     } else if (CURRENT_NODE_ENV === NODE_ENV.PRODUCTION) {
-      Logger.log(`Application running on port ${PORT}`, `Web-${CURRENT_NODE_ENV}`);
+      Logger.log(
+        `Application running on port ${PORT}`,
+        `Web-${CURRENT_NODE_ENV}`,
+      );
     } else {
-      Logger.warn('Environment not found', 'Web')
+      Logger.warn('Environment not found', 'Web');
     }
   });
 }

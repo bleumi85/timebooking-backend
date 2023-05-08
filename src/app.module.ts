@@ -10,7 +10,7 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
-import { NODE_ENV } from './common/constants';
+import { UserSeeder } from './seeders/UserSeeder';
 
 @Module({
   imports: [ConfigModule, MikroOrmModule.forRoot()],
@@ -21,11 +21,8 @@ export class AppModule implements NestModule, OnModuleInit, OnModuleDestroy {
   constructor(private readonly orm: MikroORM) {}
 
   async onModuleInit() {
-    if (process.env.NODE_ENV === NODE_ENV.DEVELOPMENT) {
-      await this.orm.getMigrator().up();
-    } else {
-      await this.orm.connect();
-    }
+    await this.orm.getMigrator().up();
+    await this.orm.getSeeder().seed(UserSeeder);
   }
 
   async onModuleDestroy() {
