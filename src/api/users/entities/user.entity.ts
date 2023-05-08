@@ -13,6 +13,9 @@ import { AbstractEntity } from '../../../common/entities';
 import { Role } from '../users.interface';
 import { UserRepository } from '../users.repository';
 import { RefreshToken } from '../../refresh-tokens/entities';
+import { ApiProperty } from '@nestjs/swagger';
+
+const roles = Object.values(Role);
 
 @Entity({ tableName: 'users', customRepository: () => UserRepository })
 @Unique({
@@ -23,21 +26,26 @@ export class User extends AbstractEntity {
   [EntityRepositoryType]?: UserRepository;
 
   @Property()
+  @ApiProperty()
   firstName: string;
 
   @Property()
+  @ApiProperty()
   lastName: string;
 
   @Property()
   @Unique()
+  @ApiProperty()
   userName: string;
 
   @Property()
   @Unique()
   @IsEmail()
+  @ApiProperty()
   email: string;
 
   @Enum({ items: () => Role })
+  @ApiProperty({ description: `Role is one of [${roles.join(', ')}]` })
   role: Role = Role.VISITOR;
 
   @Property({ columnType: 'date', nullable: true })
@@ -65,6 +73,7 @@ export class User extends AbstractEntity {
   passwordReset: Date;
 
   @Property({ persist: false })
+  @ApiProperty({ type: Boolean })
   get isVerified() {
     return !!(this.verified || this.passwordReset);
   }

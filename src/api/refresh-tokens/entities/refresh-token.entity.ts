@@ -51,4 +51,12 @@ export class RefreshToken extends AbstractEntity {
   get isActive(): boolean {
     return !this.revoked && !this.isExpired;
   }
+
+  constructor(user: User, token: string, createdByIp: string) {
+    super();
+    this.user = user;
+    this.token = token;
+    this.expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    this.createdByIp = createdByIp;
+  }
 }

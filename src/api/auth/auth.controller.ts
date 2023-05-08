@@ -1,8 +1,9 @@
 import { Body, Controller, HttpCode, HttpStatus, Inject, Post, Req, Res } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { Request, Response } from 'express';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { CookieOptions, Request, Response } from 'express';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto';
+import { LoginRequestDto } from './dto/requests';
+import { LoginResponseDto } from './dto/responses';
 
 const name = 'auth'
 
@@ -14,10 +15,14 @@ export class AuthController {
 
     @Post('login')
     @HttpCode(HttpStatus.OK)
-    async login(@Body() loginDto: LoginDto, @Req() req: Request, @Res() res: Response) {
+    @ApiResponse({ status: HttpStatus.OK, description: 'Login successful', type: LoginResponseDto })
+    @ApiResponse({ status: HttpStatus.UNAUTHORIZED, description: 'Could not log in'})
+    @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, description: 'Unhandled error'})
+    async login(@Body() loginDto: LoginRequestDto, @Req() req: Request, @Res() res: Response) {
         const ipAddress: string = req.ip;
-        const x = await this.service.login(loginDto, ipAddress);
-        return 'Log In!'
+        const { refreshToken, ...rest } = await this.service.login(loginDto, ipAddress);
+        this.setTokenCookie(res, refreshToken);
+        return res.json(rest);
     }
 
     @Post('refresh-token')
@@ -60,5 +65,15 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     async resetPassword() {
         return 'Log In!'
+    }
+
+    // helper function
+    private setTokenCookie(res: Response, token: string) {
+        const cookieOptions: CookieOptions = {
+            httpOnly: true,
+            sameSite: 'strict',
+            expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+        };
+        res.cookie('jbl_dev_token', token, cookieOptions);
     }
 }

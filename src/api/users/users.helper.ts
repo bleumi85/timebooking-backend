@@ -1,13 +1,18 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "./entities";
-import { IUserRO } from "./users.interface";
 
 @Injectable()
 export class UsersHelper {
     
     buildUserRO(user: User) {
-        const userRO: IUserRO = {
-            id: user.id
+        const userRO = {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            userName: user.userName,
+            email: user.email,
+            role: user.role,
+            isVerified: user.isVerified,
         }
 
         return {
