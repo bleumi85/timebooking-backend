@@ -8,11 +8,13 @@ import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
 
 export default defineConfig({
   discovery: {
-    warnWhenNoEntities: false,
+    warnWhenNoEntities: true,
   },
   entities: ['dist/**/*.entity.js'],
   entitiesTs: ['src/**/*.entity.ts'],
   migrations: {
+    path: 'dist/migrations',
+    pathTs: 'src/migrations',
     fileName: (timestamp: string, name?: string) => {
       // force user to provide the name, otherwise we would end up with `Migration20230421212713_undefined`
       if (!name) {

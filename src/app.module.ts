@@ -10,7 +10,7 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
-import { IS_DEVELOPMENT } from './common/constants';
+import { NODE_ENV } from './common/constants';
 
 @Module({
   imports: [ConfigModule, MikroOrmModule.forRoot()],
@@ -21,7 +21,7 @@ export class AppModule implements NestModule, OnModuleInit, OnModuleDestroy {
   constructor(private readonly orm: MikroORM) {}
 
   async onModuleInit() {
-    if (IS_DEVELOPMENT) {
+    if (process.env.NODE_ENV === NODE_ENV.DEVELOPMENT) {
       await this.orm.getMigrator().up();
     } else {
       await this.orm.connect();
