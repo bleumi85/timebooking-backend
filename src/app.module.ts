@@ -10,7 +10,6 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
-import { NODE_ENV } from './common/constants';
 import { AuthModule } from './api/auth/auth.module';
 import { UserSeeder } from './seeders/UserSeeder';
 

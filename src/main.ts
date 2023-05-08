@@ -4,10 +4,12 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { NODE_ENV } from './common/constants';
 import { setupSwagger } from './utils';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const configService = app.get(ConfigService);

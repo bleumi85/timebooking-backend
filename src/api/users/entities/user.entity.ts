@@ -83,4 +83,21 @@ export class User extends AbstractEntity {
     cascade: [Cascade.REMOVE],
   })
   tokens = new Collection<RefreshToken>(this);
+
+  constructor(
+    firstName: string,
+    lastName: string,
+    userName: string,
+    email: string,
+    acceptTerms?: boolean,
+    role?: Role,
+  ) {
+    super();
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.userName = userName;
+    this.email = email;
+    this.acceptTerms = acceptTerms || false;
+    this.role = role || Role.VISITOR;
+  }
 }

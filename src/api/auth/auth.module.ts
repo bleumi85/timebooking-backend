@@ -8,14 +8,15 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { User } from '../users/entities';
 import { AuthHelper } from './auth.helper';
 import { UsersHelper } from '../users/users.helper';
+import { EmailHelper } from 'src/common/helpers';
 
 @Module({
-    imports: [
-        PassportModule.register({ defaultStrategy: 'jwt', property: 'user' }),
-        JwtModule,
-        MikroOrmModule.forFeature([RefreshToken, User]),
-    ],
-    providers: [AuthHelper, AuthService, UsersHelper],
-    controllers: [AuthController]
+  imports: [
+    PassportModule.register({ defaultStrategy: 'jwt', property: 'user' }),
+    JwtModule,
+    MikroOrmModule.forFeature([RefreshToken, User]),
+  ],
+  providers: [AuthHelper, AuthService, EmailHelper, UsersHelper],
+  controllers: [AuthController],
 })
 export class AuthModule {}

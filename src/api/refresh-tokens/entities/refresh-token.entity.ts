@@ -48,6 +48,11 @@ export class RefreshToken extends AbstractEntity {
   }
 
   @Property({ persist: false })
+  get isRevoked(): boolean {
+    return this.revoked !== null;
+  }
+
+  @Property({ persist: false })
   get isActive(): boolean {
     return !this.revoked && !this.isExpired;
   }
