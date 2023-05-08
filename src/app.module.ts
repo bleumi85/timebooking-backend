@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
 import { NODE_ENV } from './common/constants';
 import { AuthModule } from './api/auth/auth.module';
+import { UserSeeder } from './seeders/UserSeeder';
 
 @Module({
   imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule],
@@ -22,11 +23,8 @@ export class AppModule implements NestModule, OnModuleInit, OnModuleDestroy {
   constructor(private readonly orm: MikroORM) {}
 
   async onModuleInit() {
-    if (process.env.NODE_ENV === NODE_ENV.DEVELOPMENT) {
-      await this.orm.getMigrator().up();
-    } else {
-      await this.orm.connect();
-    }
+    await this.orm.getMigrator().up();
+    await this.orm.getSeeder().seed(UserSeeder);
   }
 
   async onModuleDestroy() {
