@@ -6,7 +6,7 @@ import { NODE_ENV } from './common/constants';
 import { setupSwagger } from './utils';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
