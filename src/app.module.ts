@@ -11,9 +11,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
 import { NODE_ENV } from './common/constants';
+import { AuthModule } from './api/auth/auth.module';
 
 @Module({
-  imports: [ConfigModule, MikroOrmModule.forRoot()],
+  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
