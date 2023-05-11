@@ -12,9 +12,10 @@ import { AppService } from './app.service';
 import { ConfigModule } from './config/config.module';
 import { AuthModule } from './api/auth/auth.module';
 import { UserSeeder } from './seeders/UserSeeder';
+import { UsersModule } from './api/users/users.module';
 
 @Module({
-  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule],
+  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })

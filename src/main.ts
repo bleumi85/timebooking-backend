@@ -6,8 +6,33 @@ import { NODE_ENV } from './common/constants';
 import { setupSwagger } from './utils';
 import * as cookieParser from 'cookie-parser';
 
+var whiteList = [];
+
+var regexList = [
+  /localhost:\d+$/
+];
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    credentials: true,
+    origin: function(origin, callback) {
+      if (origin === undefined) {
+        Logger.log('no origin', 'CORS');
+        callback(null, true);
+      } else if (whiteList.indexOf(origin) !== -1) {
+        Logger.log(origin, 'CORS-Whitelist');
+        callback(null, true);
+      } else if (regexList.some((regex) => regex.test(origin))) {
+        Logger.log(origin, 'CORS-Regex');
+        callback(null, true);
+      } else {
+        Logger.warn(origin, 'CORS-NotAllowed');
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  })
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));

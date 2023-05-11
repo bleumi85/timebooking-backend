@@ -5,13 +5,15 @@ import { User } from '../users/entities';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshToken } from '../refresh-tokens/entities';
 import { RefreshTokenRepository } from '../refresh-tokens/refresh-tokens.repository';
+import { UserRepository } from '../users/users.repository';
 
 @Injectable()
 export class AuthHelper {
   constructor(
+    private readonly userRepository: UserRepository,
     private readonly rtRepository: RefreshTokenRepository,
     private readonly jwt: JwtService,
-  ) {}
+  ) { }
 
   // Encode User's password
   public async encodePassword(password: string): Promise<string> {
@@ -57,5 +59,10 @@ export class AuthHelper {
   // Generate random token string
   public randomTokenString(): string {
     return crypto.randomBytes(40).toString('hex');
+  }
+
+  // Get User by ID we get from decode
+  public async validateUser(decoded: any): Promise<User> {
+    return await this.userRepository.findOne(decoded.id)
   }
 }

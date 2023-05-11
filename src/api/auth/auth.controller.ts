@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Inject,
+  InternalServerErrorException,
   Post,
   Req,
   Res,
@@ -33,6 +34,11 @@ const name = 'auth';
 export class AuthController {
   @Inject(AuthService)
   private readonly service: AuthService;
+
+  @Post('foo')
+  foo() {
+    throw new InternalServerErrorException('FATAL')
+  }
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
@@ -85,7 +91,7 @@ export class AuthController {
 
   @Post('register')
   @HttpCode(HttpStatus.OK)
-  @ApiHeader({ name: 'host', required: false })
+  @ApiHeader({ name: 'origin', required: false })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Login successful',
@@ -93,7 +99,7 @@ export class AuthController {
   })
   async register(
     @Body() registerDto: RegisterRequestDto,
-    @Headers('host') origin: string,
+    @Headers('origin') origin: string,
   ) {
     await this.service.register(registerDto, origin);
     return {
@@ -116,7 +122,7 @@ export class AuthController {
 
   @Post('forgot-password')
   @HttpCode(HttpStatus.OK)
-  @ApiHeader({ name: 'host', required: false })
+  @ApiHeader({ name: 'origin', required: false })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Please check your email',
@@ -124,7 +130,7 @@ export class AuthController {
   })
   async forgotPassword(
     @Body() forgotPasswordDto: ForgotPasswordRequestDto,
-    @Headers('host') origin: string,
+    @Headers('origin') origin: string,
   ) {
     await this.service.forgotPassword(forgotPasswordDto, origin);
     return {

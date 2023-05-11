@@ -9,6 +9,7 @@ import { User } from '../users/entities';
 import { AuthHelper } from './auth.helper';
 import { UsersHelper } from '../users/users.helper';
 import { EmailHelper } from 'src/common/helpers';
+import { JwtStrategy } from './jwt/jwt.strategy';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { EmailHelper } from 'src/common/helpers';
     JwtModule,
     MikroOrmModule.forFeature([RefreshToken, User]),
   ],
-  providers: [AuthHelper, AuthService, EmailHelper, UsersHelper],
+  providers: [AuthHelper, AuthService, EmailHelper, JwtStrategy, UsersHelper],
   controllers: [AuthController],
 })
 export class AuthModule {}
