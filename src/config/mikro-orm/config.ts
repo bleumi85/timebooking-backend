@@ -5,6 +5,7 @@ import { defineConfig } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { SeedManager } from '@mikro-orm/seeder';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
+import { NODE_ENV } from 'src/common/constants';
 
 export default defineConfig({
   discovery: {
@@ -32,6 +33,7 @@ export default defineConfig({
     path: 'dist/seeders',
     pathTs: 'src/seeders',
   },
+  debug: process.env.NODE_ENV === NODE_ENV.DEVELOPMENT,
   loadStrategy: LoadStrategy.JOINED,
   highlighter: new SqlHighlighter(),
   metadataProvider: TsMorphMetadataProvider,

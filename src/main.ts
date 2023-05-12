@@ -15,7 +15,10 @@ var regexList = [
 ];
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const isDevelopment = process.env.NODE_ENV === NODE_ENV.DEVELOPMENT
+  const app = await NestFactory.create(AppModule, {
+    logger: isDevelopment ? ['debug', 'error', 'log', 'verbose', 'warn'] : ['error', 'warn']
+  });
 
   app.enableCors({
     credentials: true,
