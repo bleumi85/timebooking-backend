@@ -15,9 +15,10 @@ import { UserSeeder } from './seeders/UserSeeder';
 import { UsersModule } from './api/users/users.module';
 import { LocationsModule } from './api/locations/locations.module';
 import { TasksModule } from './api/tasks/tasks.module';
+import { SchedulesModule } from './api/schedules/schedules.module';
 
 @Module({
-  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule, UsersModule, LocationsModule, TasksModule],
+  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule, UsersModule, LocationsModule, TasksModule, SchedulesModule],
   controllers: [AppController],
   providers: [AppService],
 })

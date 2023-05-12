@@ -581,6 +581,149 @@
           "updateRule": "cascade"
         }
       }
+    },
+    {
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "mappedType": "string"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "default": "current_timestamp",
+          "mappedType": "datetime"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "time_from": {
+          "name": "time_from",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "time_to": {
+          "name": "time_to",
+          "type": "timestamptz(0)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "length": 6,
+          "mappedType": "datetime"
+        },
+        "remark": {
+          "name": "remark",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "mappedType": "string"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "task_id": {
+          "name": "task_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        },
+        "location_id": {
+          "name": "location_id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "mappedType": "string"
+        }
+      },
+      "name": "schedules",
+      "schema": "public",
+      "indexes": [
+        {
+          "keyName": "schedules_pkey",
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "primary": true,
+          "unique": true
+        }
+      ],
+      "checks": [],
+      "foreignKeys": {
+        "schedules_user_id_foreign": {
+          "constraintName": "schedules_user_id_foreign",
+          "columnNames": [
+            "user_id"
+          ],
+          "localTableName": "public.schedules",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.users",
+          "updateRule": "cascade"
+        },
+        "schedules_task_id_foreign": {
+          "constraintName": "schedules_task_id_foreign",
+          "columnNames": [
+            "task_id"
+          ],
+          "localTableName": "public.schedules",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.tasks",
+          "updateRule": "cascade"
+        },
+        "schedules_location_id_foreign": {
+          "constraintName": "schedules_location_id_foreign",
+          "columnNames": [
+            "location_id"
+          ],
+          "localTableName": "public.schedules",
+          "referencedColumnNames": [
+            "id"
+          ],
+          "referencedTableName": "public.locations",
+          "updateRule": "cascade"
+        }
+      }
     }
   ]
 }
