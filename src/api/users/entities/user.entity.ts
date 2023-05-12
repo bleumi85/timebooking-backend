@@ -16,6 +16,7 @@ import { UserRepository } from '../users.repository';
 import { RefreshToken } from '../../refresh-tokens/entities';
 import { ApiProperty } from '@nestjs/swagger';
 import { Location } from '../../locations/entities';
+import { Task } from '../../tasks/entities';
 
 const roles = Object.values(Role);
 
@@ -88,6 +89,9 @@ export class User extends AbstractEntity {
 
   @OneToMany(() => Location, (l) => l.user, { hidden: true, cascade: [Cascade.REMOVE] })
   locations = new Collection<Location>(this);
+
+  @OneToMany(() => Task, (t) => t.user, { hidden: true, cascade: [Cascade.REMOVE]})
+  tasks = new Collection<Task>(this);
 
   constructor(
     firstName: string,

@@ -1,4 +1,4 @@
-import { Collection, Entity, EntityRepositoryType, ManyToOne, Property, Unique } from "@mikro-orm/core";
+import { Entity, EntityRepositoryType, ManyToOne, Property, Unique } from "@mikro-orm/core";
 import { AbstractEntity } from "../../../common/entities";
 import { ApiProperty } from "@nestjs/swagger";
 import { User } from "../../users/entities";
