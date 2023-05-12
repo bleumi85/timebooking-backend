@@ -6,7 +6,9 @@ import { NODE_ENV } from './common/constants';
 import { setupSwagger } from './utils';
 import * as cookieParser from 'cookie-parser';
 
-var whiteList = [];
+var whiteList = [
+  'https://jbldev.netlify.app'
+];
 
 var regexList = [
   /localhost:\d+$/
