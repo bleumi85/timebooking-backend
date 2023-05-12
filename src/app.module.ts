@@ -13,9 +13,10 @@ import { ConfigModule } from './config/config.module';
 import { AuthModule } from './api/auth/auth.module';
 import { UserSeeder } from './seeders/UserSeeder';
 import { UsersModule } from './api/users/users.module';
+import { LocationsModule } from './api/locations/locations.module';
 
 @Module({
-  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule, UsersModule],
+  imports: [ConfigModule, MikroOrmModule.forRoot(), AuthModule, UsersModule, LocationsModule],
   controllers: [AppController],
   providers: [AppService],
 })
