@@ -2,11 +2,11 @@ import { Entity, EntityRepositoryType, ManyToOne, Property, Unique } from "@mikr
 import { AbstractEntity } from "../../../common/entities";
 import { ApiProperty } from "@nestjs/swagger";
 import { User } from "../../users/entities";
-import { LocationRepository } from "../locations.repository";
+import { TaskRepository } from "../tasks.repository";
 
-@Entity({ tableName: 'locations', customRepository: () => LocationRepository })
-export class Location extends AbstractEntity {
-    [EntityRepositoryType]?: LocationRepository;
+@Entity({ tableName: 'tasks', customRepository: () => TaskRepository})
+export class Task extends AbstractEntity {
+    [EntityRepositoryType]?: TaskRepository;
 
     @Property()
     @Unique()
@@ -16,10 +16,6 @@ export class Location extends AbstractEntity {
     @Property({ nullable: true })
     @ApiProperty()
     color: string;
-
-    @Property({ default: false })
-    @ApiProperty()
-    showCompleteMonth = false
 
     @Property({ nullable: true })
     @ApiProperty()
