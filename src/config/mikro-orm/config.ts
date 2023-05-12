@@ -26,6 +26,7 @@ export default defineConfig({
       return `Migration${timestamp}_${name}`;
     },
     disableForeignKeys: false,
+    snapshot: false,
   },
   seeder: {
     path: 'dist/seeders',
