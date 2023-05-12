@@ -75,7 +75,7 @@ export class User extends AbstractEntity {
   @Property({ nullable: true })
   passwordReset: Date;
 
-  @Property({ persist: false })
+  @Property({ persist: false, hidden: true })
   @ApiProperty({ type: Boolean })
   get isVerified() {
     return !!(this.verified || this.passwordReset);

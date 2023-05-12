@@ -22,6 +22,10 @@ export class Schedule extends AbstractEntity {
     @ApiProperty()
     remark: string;
 
+    @Property({ default: false })
+    @ApiProperty()
+    isTransferred: false;
+
     @ManyToOne(() => User)
     user: User;
 

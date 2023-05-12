@@ -20,8 +20,8 @@ export class SchedulesController {
   }
 
   @Get()
-  findAll() {
-    return this.schedulesService.findAll();
+  async findAll() {
+    return await this.schedulesService.findAll();
   }
 
   @Get(':id')
