@@ -4,7 +4,6 @@ import {
   Entity,
   EntityRepositoryType,
   Enum,
-  ManyToMany,
   OneToMany,
   Property,
   Unique,
@@ -17,6 +16,7 @@ import { RefreshToken } from '../../refresh-tokens/entities';
 import { ApiProperty } from '@nestjs/swagger';
 import { Location } from '../../locations/entities';
 import { Task } from '../../tasks/entities';
+import { Schedule } from '../../schedules/entities';
 
 const roles = Object.values(Role);
 
@@ -92,6 +92,9 @@ export class User extends AbstractEntity {
 
   @OneToMany(() => Task, (t) => t.user, { hidden: true, cascade: [Cascade.REMOVE]})
   tasks = new Collection<Task>(this);
+
+  @OneToMany(() => Schedule, (s) => s.user, { hidden: true, cascade: [Cascade.REMOVE]})
+  schedules = new Collection<Schedule>(this);
 
   constructor(
     firstName: string,
