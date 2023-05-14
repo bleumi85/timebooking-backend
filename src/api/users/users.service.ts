@@ -2,7 +2,7 @@ import { EntityManager } from '@mikro-orm/core';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersHelper } from './users.helper';
 import { UserRepository } from './users.repository';
-import { CreateUserDto } from './dto';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { User } from './entities';
 import * as bcrypt from 'bcrypt';
 
@@ -37,5 +37,26 @@ export class UsersService {
     async findAll() {
         const users = await this.userRepository.findAll();
         return users.map(user => this.usersHelper.buildUserRO(user).user);
+    }
+
+    async findOne(id: string) {
+        const user = await this.usersHelper.getUser(id);
+        return this.usersHelper.buildUserRO(user);
+    }
+
+    async update(id: string, params: UpdateUserDto) {
+        const user = await this.usersHelper.getUser(id);
+
+        // validate (if email was changed)
+        if (params.email && user.email !== params.email && await this.userRepository.findOne({ email: params.email })) {
+            throw new BadRequestException('Email "' + params.email + '" is already taken');
+        }
+
+        return { message: `This action updated a #${id} user`}
+    }
+
+    async remove(id: string) {
+        const user = await this.usersHelper.getUser(id);
+        await this.em.removeAndFlush(user);
     }
 }

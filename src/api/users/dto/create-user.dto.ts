@@ -36,7 +36,7 @@ export class CreateUserDto {
     confirmPassword: string;
 
     @IsString()
-    @IsOptional()
-    @IsIn(roles, { message: 'Role must be one of ' + roles.join(', ')})
+    @IsIn(roles, { message: 'Role must be one of ' + roles.join(', ') })
+    @ApiProperty({ default: Role.USER })
     role: Role;
 }
